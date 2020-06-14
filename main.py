@@ -21,7 +21,15 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
 
 
 
-seed(1)
-network = initialize_network(2, 1, 2)
-for layer in network:
-	print(layer)
+# seed(1)
+# network = initialize_network(2, 1, 2)
+# for layer in network:
+# 	print(layer)
+
+
+# Calculate neuron activation for an input
+def activate(weights, inputs):
+	activation = weights[-1]
+	for i in range(len(weights)-1):
+		activation += weights[i] * inputs[i]
+	return activation
