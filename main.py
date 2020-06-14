@@ -59,6 +59,11 @@ def forward_propagate(network, row):
     return inputs
 
 
+# Calculate the derivative of an neuron output
+def transfer_derivative(output):
+	return output * (1.0 - output)
+
+
 # Backpropagate error and store in neurons
 def backward_propagate_error(network, expected):
 	for i in reversed(range(len(network))):
@@ -77,4 +82,9 @@ def backward_propagate_error(network, expected):
 		for j in range(len(layer)):
 			neuron = layer[j]
 			neuron['delta'] = errors[j] * transfer_derivative(neuron['output'])
+            
+            
+ 
+            
+            
 
