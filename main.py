@@ -32,23 +32,15 @@ def activate(weights, inputs):
 
 # Transfer neuron activation
 
-def transfer(x, type_function):
-    
-    if type_function == 'tanh':
-        
-        output = (np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))
-        
+def transfer(x, type_function):  
+    if type_function == 'tanh':       
+        output = (np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))     
     elif type_function == 'softMax': 
-    
-        output = np.exp(x)/np.sum(np.exp(x))
-        
-    else:
-         
-        output = x
-        
+        output = np.exp(x)/np.sum(np.exp(x))        
+    else:         
+        output = x     
     return output    
 
-transfer_Funtions = ['None', 'tanh', 'softMax'] 
 
 # Forward propagate input to a network output
 def forward_propagate(network, row):
@@ -56,8 +48,7 @@ def forward_propagate(network, row):
     inputs = row
     cont = 0
     for layer in network:
-        new_inputs = []
-        
+        new_inputs = []      
         for neuron in layer:
             activation = activate(neuron['weights'], inputs)
             neuron['output'] = transfer(activation,transfer_Funtions[cont])
@@ -66,5 +57,7 @@ def forward_propagate(network, row):
         inputs = new_inputs
         cont = cont + 1
     return inputs
+
+
 
 
