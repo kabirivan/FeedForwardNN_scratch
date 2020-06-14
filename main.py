@@ -8,6 +8,7 @@ Created on Sat Jun 13 20:38:56 2020
 
 from random import seed
 from random import random
+import numpy as np
 
 
 # Initialize a network
@@ -28,25 +29,42 @@ def activate(weights, inputs):
 	return activation
 
 
+
 # Transfer neuron activation
-def transfer_tanh(x):
-	return (exp(x)-exp(-x))/(exp(x)+exp(-x))
 
+def transfer(x, type_function):
+    
+    if type_function == 'tanh':
+        
+        output = (np.exp(x)-np.exp(-x))/(np.exp(x)+np.exp(-x))
+        
+    elif type_function == 'softMax': 
+    
+        output = np.exp(x)/np.sum(np.exp(x))
+        
+    else:
+         
+        output = x
+        
+    return output    
 
-def transfer_softmax(x):
-    return np.exp(x)/np.sum(np.exp(x))
-
+transfer_Funtions = ['None', 'tanh', 'softMax'] 
 
 # Forward propagate input to a network output
 def forward_propagate(network, row):
-	inputs = row
-	for layer in network:
-		new_inputs = []
-		for neuron in layer:
-			activation = activate(neuron['weights'], inputs)
-			neuron['output'] = transfer(activation)
-			new_inputs.append(neuron['output'])
-		inputs = new_inputs
-	return inputs
+    transfer_Funtions = ['None', 'tanh', 'softMax'] 
+    inputs = row
+    cont = 0
+    for layer in network:
+        new_inputs = []
+        
+        for neuron in layer:
+            activation = activate(neuron['weights'], inputs)
+            neuron['output'] = transfer(activation,transfer_Funtions[cont])
+            new_inputs.append(neuron['output'])
+           
+        inputs = new_inputs
+        cont = cont + 1
+    return inputs
 
 
